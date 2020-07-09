@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
-class DishDetail extends Component {
 
-    rendercomments(comments) {
+
+    function RenderComments({comments}) {
         if (comments == null) {
             return (<div></div>)
         }
-        const cmnts = comments.map(comment => {
+        const cmnts = comments.map((comment) => {
             return (
                 <li key={comment.id}>
                     <p>{comment.comment}</p>
@@ -20,7 +20,7 @@ class DishDetail extends Component {
                         }
                     </p>
                 </li>
-            )
+            );
         })
         return (
             <div className='col-12 col-md-5 m-1'>
@@ -29,10 +29,10 @@ class DishDetail extends Component {
                     {cmnts}
                 </ul>
             </div>
-        )
+        );
     }
-    renderDish(dish) {
-        if (dish != null) {
+    function RenderDish({dish}) {
+
             return (
                 <div className='col-12 col-md-5 m-1'>
                     <Card>
@@ -43,29 +43,24 @@ class DishDetail extends Component {
                         </CardBody>
                     </Card>
                 </div>
-            )
-        }
-        else {
-            return (
-                <div></div>
             );
-        }
+
     }
 
-    render() {
-        const dish = this.props.dish
+    const DishDetail = (props) => {
+        const dish = props.dish
         if (dish == null) {
             return (<div></div>)
         }
-        const dishItem = this.renderDish(dish)
-        const commentItem = this.rendercomments(dish.comments)
+        const dishItem = props.renderDish(dish)
+        const commentItem = props.rendercomments(dish.comments)
         return (
             <div className='row'>
                 {dishItem}
                 {commentItem}
             </div>
-        )
+        );
     }
-}
+
 
 export default DishDetail;
