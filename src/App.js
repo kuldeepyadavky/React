@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import {Navbar, NavbarBrand} from 'reactstrap';
-import './App.css';
 import Menu from './components/MenuComponent';
+
 import { DISHES } from './shared/dishes.js';
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
     dishes: DISHES
     };
   }
-  
+
   render(){
   return (
     <div className="App">
