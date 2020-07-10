@@ -1,14 +1,16 @@
 import React  from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
-
+import { DISHES } from '../shared/dishes.js';
 
     function RenderComments({comments}) {
-        if (comments == null) {
-            return (<div></div>)
-        }
-        const cmnts = comments.map((comment) => {
+        if (comments != null) {
             return (
+                <div className="col-12 col-md-5 m-1">
+                <h4>Comments</h4>
+                <ul className="list-unstyled">
+                {comments.map((comment) => {
+                  return(
                 <li key={comment.id}>
                     <p>{comment.comment}</p>
                     <p>-- {comment.author},
@@ -16,27 +18,27 @@ import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
                         year: 'numeric',
                         month: 'short',
                         day: '2-digit'
-                    }).format(new Date(comment.date))
-                        }
+                    }).format(new Date(comment.date))}
+
                     </p>
                 </li>
-            );
-        })
-        return (
-            <div className='col-12 col-md-5 m-1'>
-                <h4>Comments</h4>
-                <ul className='list-unstyled'>
-                    {cmnts}
+              );
+           }  )
+                }
                 </ul>
-            </div>
-        );
+                </div>
+            );
+      }
+        else
+          return ( <div></div>  );
     }
+
     function RenderDish({dish}) {
 
             return (
                 <div className='col-12 col-md-5 m-1'>
                     <Card>
-                        <CardImg width="100%" src={dish.image} alt={dish.name} />
+                        <CardImg width="100%" top src={dish.image} alt={dish.name} />
                         <CardBody body className="ml-5">
                             <CardTitle>{dish.name}</CardTitle>
                             <CardText>{dish.description}</CardText>
@@ -48,18 +50,16 @@ import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
     }
 
     const DishDetail = (props) => {
-        const dish = props.dish
-        if (dish == null) {
-            return (<div></div>)
-        }
-        const dishItem = props.renderDish(dish)
-        const commentItem = props.rendercomments(dish.comments)
-        return (
-            <div className='row'>
-                {dishItem}
-                {commentItem}
-            </div>
-        );
+      if(props.dish != null){
+      return(
+        <div class="container">
+        <div className="row">
+            <RenderDish dish={props.dish} />
+              <RenderComments comments={props.dish.comments} />
+          </div>
+          </div>
+      );}
+      else return( <div></div>);
     }
 
 
