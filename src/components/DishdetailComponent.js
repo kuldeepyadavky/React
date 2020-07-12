@@ -128,7 +128,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
     function RenderComments({comments}){
 
         if(comments != null){
-            let comments = comments.map(comment => {
+            const commentsDiv = comments.map((comment) => {
                 return(
                     <div key={comment.id}>
                         <li>{comment.comment}</li>
@@ -143,9 +143,9 @@ const minLength = (len) => (val) => val && (val.length >= len);
                 <div className = "col-12 col-md-5 m-1">
                     <h4>Comments</h4>
                     <ul className="list-unstyled">
-                        {comments}
+                        {commentsDiv}
                     </ul>
-                    <CommentForm />
+                    <CommentForm/>
                 </div>
             );
         }
