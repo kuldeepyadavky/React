@@ -4,7 +4,6 @@ import { Card, CardImg, CardText, CardBody,
      ModalHeader, ModalBody, Label, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
-import { Loading } from './LoadingComponent';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -18,7 +17,6 @@ const minLength = (len) => (val) => val && (val.length >= len);
             };
 
             this.toggleModal = this.toggleModal.bind(this);
-            this.handleSubmit = this.handleSubmit.bind(this);
         }
 
         toggleModal(){
@@ -29,12 +27,13 @@ const minLength = (len) => (val) => val && (val.length >= len);
 
         handleSubmit(values){
             this.toggleModal();
-            this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+            alert("The current state is :" + JSON.stringify(values));
+            console.log("The current state is :" + JSON.stringify(values));
         }
 
         render(){
             return(
-                <div>
+                <>
 
                 <Button outline onClick={this.toggleModal}><span className="fa fa-pencil fa-lg"/>Submit Comment</Button>
 
@@ -98,13 +97,13 @@ const minLength = (len) => (val) => val && (val.length >= len);
                     </ModalBody>
                 </Modal>
 
-                </div>
+                </>
             );
         }
     }
 
    function RenderDish({dish}){
-
+        if(dish != null){
             return (
                     <div className="col-12 col-md-5 m-1">
                         <Card>
@@ -117,61 +116,54 @@ const minLength = (len) => (val) => val && (val.length >= len);
                     </div>
             );
         }
-
-
-    function RenderComments({comments, addComment, dishId}){
-
-        if(comments != null)
-            return (
-                <div className = "col-12 col-md-5 m-1">
-                    <h4>Comments</h4>
-                    <ul className="list-unstyled">
-                    {comments.map((comment) => {
-                      return(
-                    <li key={comment.id}>
-                        <p>{comment.comment}</p>
-                        <br/>
-                        <p>--{comment.author}, <span>{new Intl.DateTimeFormat("en-US",{year:"numeric", month: "short", day: "2-digit"}).format(new Date(Date.parse(comment.date)))}</span> </p>
-                        <br/>
-                    </li>
-                  );
-                })}
-                    </ul>
-                    <CommentForm dishId={dishId} addComment={addComment}/>
-                </div>
-            );
-
-        else
+        else{
             return(
                 <div>
 
                 </div>
             );
+        }
+    }
 
+    function RenderComments({comments}){
+
+        if(comments != null){
+            const commentsDiv = comments.map((comment) => {
+                return(
+                    <div key={comment.id}>
+                        <li>{comment.comment}</li>
+                        <br/>
+                        <li>--{comment.author}, <span>{new Intl.DateTimeFormat("en-US",{year:"numeric", month: "short", day: "2-digit"}).format(new Date(Date.parse(comment.date)))}</span> </li>
+                        <br/>
+                    </div>
+                );
+            })
+
+            return (
+                <div className = "col-12 col-md-5 m-1">
+                    <h4>Comments</h4>
+                    <ul className="list-unstyled">
+                        {commentsDiv}
+                    </ul>
+                    <CommentForm/>
+                </div>
+            );
+        }
+        else{
+            return(
+                <div>
+
+                </div>
+            );
+        }
     }
 
 
     const DishDetail = (props) => {
-        if(props.isLoading){
-          return(
-            <div className="container">
-              <div className="row">
-              <Loading />
-              </div>
-            </div>
-          );
-        }
-        else if(props.errMess){
-          return(
-            <div className="container">
-              <div className="row">
-              <h4>{props.errMess}</h4>
-              </div>
-            </div>
-          );
-        }
-
-        if(props.dish != null)
+        let dish = props.dish;
+        let comments = null;
+        if(dish != null)
+            comments = dish.comments;
         return(
             <div className="container">
                 <div className="row">
@@ -187,17 +179,11 @@ const minLength = (len) => (val) => val && (val.length >= len);
                 <div className="row">
                         <RenderDish dish={props.dish} />
 
-                        <RenderComments comments={props.comments}
-                        addComment={props.addComment}
-                        dishId={props.dish.id} />
+                        <RenderComments comments={props.comments} />
 
                 </div>
                 </div>
-        );
-        else
-        return(
-          <div></div>
-        );
+        )
     }
 
 export default DishDetail;
