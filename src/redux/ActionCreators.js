@@ -14,7 +14,7 @@ export const addComment = (dishId, rating, author, comment) => ({
 });
 
 export const fetchDishes = () => (dispatch) => {
-	dishpatch(dishesLoading(true));
+	dispatch(dishesLoading(true));
 
 	setTimeout(() => {
 		dispatch(addDishes(DISHES));
@@ -28,12 +28,12 @@ export const dishesLoading = ()  => ({
 });
 
 
-export const dishesFailed = (errMess)  => ({
+export const dishesFailed = (errmess)  => ({
 	type: ActionTypes.DISHES_FAILED,
 	payload: errmess
 });
 
-export const addDishes = ()  => ({
+export const addDishes = (dishes)  => ({
 	type: ActionTypes.ADD_DISHES,
 	payload: dishes
 });
