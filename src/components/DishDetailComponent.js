@@ -50,7 +50,7 @@ class CommentForm extends Component {
                                         className="form-control">
                                         <option>1</option>
                                         <option>2</option>
-                                        <option>3</option>
+                                        <option>3</option>    
                                         <option>4</option>
                                         <option>5</option>
                                     </Control.select>
@@ -156,7 +156,7 @@ const DishDetail = (props) => {
     if (props.isLoading) {
         return(
             <div className="container">
-                <div className="row">
+                <div className="row">            
                     <Loading />
                 </div>
             </div>
@@ -164,7 +164,7 @@ const DishDetail = (props) => {
     } else if (props.errMess) {
         return(
             <div className="container">
-                <div className="row">
+                <div className="row">            
                     <h4>{props.errMess}</h4>
                 </div>
             </div>
@@ -180,7 +180,7 @@ const DishDetail = (props) => {
                     <div className="col-12">
                         <h3>{props.dish.name}</h3>
                         <hr />
-                    </div>
+                    </div>                
                 </div>
                 <div className="row">
                     <RenderDish dish={props.dish} />
