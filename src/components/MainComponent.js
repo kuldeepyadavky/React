@@ -4,7 +4,7 @@ import Menu from './MenuComponent';
 import Contact from './ContactComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
-import DishDetail from './DishDetailComponent.js';
+import DishDetail from './DishdetailComponent.js';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import About from './AboutComponent';
 import { connect } from 'react-redux';
@@ -41,10 +41,10 @@ class Main extends Component {
   }
 
   render() {
-    
+
     const HomePage = () => {
       return(
-        <Home 
+        <Home
           dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
           dishesLoading={this.props.dishes.isLoading}
           dishesErrMess={this.props.dishes.errMess}
@@ -92,4 +92,3 @@ class Main extends Component {
 }
 
 export default withRouter(connect(mapStoreToProps, mapDispatchToProps)(Main));
-
